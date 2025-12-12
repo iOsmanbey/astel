@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTEL - CARION WIDE C-ARM System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom styles for smooth scrolling and general look */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b; /* slate-800 */
+        }
+        .container {
+            max-width: 1200px;
+        }
+        /* Custom icon styling for Lucide integration */
+        .lucide {
+            display: inline-block;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        /* Style for fixed navbar background on static pages */
+        #navbar-static {
+            background-color: #ffffff; /* White background */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 bg-slate-50">
+
+    <!-- Navbar - Changed 'fixed' to 'sticky top-0' for natural scrolling -->
+    <nav id="navbar-static" class="sticky top-0 w-full z-50 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- ASTEL Logo (Simulating PNG file with robust placeholder URL) -->
+            <a href="index.html" class="flex items-center space-x-2 text-2xl font-bold text-blue-600">
+                <img 
+                    src="./ASTEL-LOGO-2953X785.png.png" 
+                    onerror="this.onerror=null;this.src='https://placehold.co/150x40/ffffff/0e7490?text=ASTEL+Logo';"
+                    alt="ASTEL Logo" 
+                    class="h-10 w-auto object-contain"
+                />
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="flex space-x-8 text-lg font-medium">
+                <li><a href="index.html" class="hover:text-blue-600 transition duration-150">Home</a></li>
+                <li><a href="index.html#products" class="hover:text-blue-600 transition duration-150">Products</a></li>
+                <!-- Current page link -->
+                <li><a href="#" class="text-blue-600 border-b-2 border-blue-600">C-ARM</a></li>
+                <li><a href="index.html#contact" class="hover:text-blue-600 transition duration-150">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <header class="text-center mb-12">
+                <h1 class="text-5xl font-extrabold text-slate-900 mb-4">CARION WIDE C-ARM System</h1>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">The CARION WIDE offers excellent image clarity and details at a low dose with enhancement functions for precise medical procedures.</p>
+            </header>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="relative rounded-xl shadow-2xl overflow-hidden">
+                    <!-- Placeholder image for the C-ARM system -->
+                    <img src="./Carm.jpg" alt="CARION WIDE C-ARM System" class="w-full h-auto object-cover">
+                    <div class="absolute inset-0 bg-blue-600 opacity-10" ></div>
+                </div>
+
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold text-slate-900 flex items-center">
+                        <i data-lucide="zap" class="w-8 h-8 mr-3 text-blue-600"></i>
+                        Key Capabilities
+                    </h2>
+                    <ul class="space-y-4 text-lg text-slate-700">
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 mt-1 mr-3 text-green-500 flex-shrink-0"></i>
+                            <span class="font-semibold">Wide-View Dynamic Imaging:</span> High-performance 17x17 inch Wide Flat Panel Detector (DR 9 Mega pixel).
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 mt-1 mr-3 text-green-500 flex-shrink-0"></i>
+                            <span class="font-semibold">Optimized Dose Control:</span> Features Low Dose Mode and Pulse Mode for patient safety.
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 mt-1 mr-3 text-green-500 flex-shrink-0"></i>
+                            <span class="font-semibold">Advanced Mobility:</span> &plusmn;225&deg; Angulation, 135&deg; Orbital Rotation, and 200mm Horizontal Travel.
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 mt-1 mr-3 text-green-500 flex-shrink-0"></i>
+                            <span class="font-semibold">Powerful Generator:</span> 5.3kW High Frequency Generator for clear, consistent output.
+                        </li>
+                    </ul>
+                    <a href="index.html#contact" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-blue-600 hover:bg-blue-700 transition duration-300 mt-6">
+                        Request a Quote <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <hr class="my-12 border-slate-200">
+
+            <!-- Technical Specifications Table -->
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-900 inline-flex items-center border-b-2 border-blue-600 pb-1">
+                    <i data-lucide="clipboard-list" class="w-7 h-7 mr-2 text-blue-600"></i>
+                    Technical Specifications
+                </h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-300 bg-white shadow-xl rounded-xl">
+                    <thead class="bg-blue-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-slate-700 uppercase tracking-wider">Component</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-slate-700 uppercase tracking-wider">Specification</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-slate-900">Detector</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-slate-700">17" x 17" Wide FPD (DR 9 Mega pixel)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-slate-900">Generator</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-slate-700">5.3kW High Frequency</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-slate-900">Image Control</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-slate-700">Low Dose Mode, Pulse Mode</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-slate-900">C-ARM Angulation</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-slate-700">&plusmn;225&deg;</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-slate-900">Orbital Rotation</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-slate-700">135&deg;</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-slate-900">Horizontal Travel</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-slate-700">200mm</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-slate-900">DICOM Services</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-slate-700">DICOM 3.0, Connectivity to PACS</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="my-12 border-slate-200">
+
+            <!-- Empty section where the chat used to be -->
+            <div class="text-center pt-8">
+                <p class="text-lg text-slate-500">Find the new chat assistant icon in the bottom right corner of your screen!</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
+        <div class="container mx-auto px-6 text-center text-slate-600">
+            <p>&copy; 2025 ASTEL Inc. All rights reserved.</p>
+            <p>26-79, Gajeongbuk-ro, Yuseong-gu, Daejeon, 34113 Korea</p>
+        </div>
+    </footer>
+
+    <!-- Fixed Chat Container - NEW IMPLEMENTATION -->
+    <div id="chat-fixed-container" class="fixed bottom-6 right-6 z-50">
+        <!-- Chat Toggle Button (Always visible) -->
+        <button id="chat-toggle-button" class="bg-blue-600 text-white p-4 rounded-full shadow-xl hover:bg-blue-700 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300/50">
+            <!-- Initial Icon: Message -->
+            <i data-lucide="message-square-text" class="w-8 h-8"></i>
+        </button>
+        
+        <!-- Chat Window (Hidden by default, appears above the toggle button) -->
+        <div id="chat-window" class="hidden absolute bottom-0 right-0 mb-20 w-80 lg:w-96 h-[450px] rounded-xl shadow-2xl overflow-hidden bg-white flex flex-col border border-gray-100 transition-all duration-300 ease-in-out">
+            <!-- Chat Header -->
+            <div class="p-4 bg-blue-600 text-white font-bold flex items-center justify-between flex-shrink-0">
+                <span class="flex items-center">
+                    <i data-lucide="message-square-text" class="w-5 h-5 mr-2"></i>
+                    ASTEL AI Assistant
+                </span>
+                <!-- Link to Cabinet Dashboard -->
+                <a href="chat_dashboard.html" target="_blank" class="text-xs font-normal bg-blue-700/50 hover:bg-blue-700/70 py-1 px-2 rounded-full transition duration-150">
+                    View Cabinet
+                </a>
+            </div>
+
+            <!-- Chat History (Scrollable) -->
+            <div id="chat-history" class="flex-grow p-4 space-y-4 overflow-y-auto bg-gray-50 text-left">
+                <!-- Messages will be appended here by JS -->
+            </div>
+
+            <!-- Chat Input -->
+            <div class="p-4 bg-white border-t border-gray-200 flex items-center flex-shrink-0">
+                <input 
+                    type="text" 
+                    id="chat-input" 
+                    placeholder="Ask a quick question..." 
+                    class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 text-sm"
+                >
+                <button 
+                    id="send-button" 
+                    class="bg-blue-600 text-white p-3 rounded-r-lg hover:bg-blue-700 transition duration-150 flex items-center justify-center disabled:bg-gray-400"
+                    aria-label="Send Message"
+                >
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // --- AI Chat Logic ---
+        const chatHistory = [];
+        const chatInput = document.getElementById('chat-input');
+        const sendButton = document.getElementById('send-button');
+        const chatHistoryDiv = document.getElementById('chat-history');
+        const chatToggle = document.getElementById('chat-toggle-button');
+        const chatWindow = document.getElementById('chat-window');
+        const apiKey = ""; // API key is handled by the Canvas environment
+
+        // Function to toggle the chat window visibility and change the icon
+        function toggleChat() {
+            chatWindow.classList.toggle('hidden');
+            const iconElement = chatToggle.querySelector('.lucide');
+            
+            // Toggle the icon
+            if (iconElement) {
+                if (chatWindow.classList.contains('hidden')) {
+                    // Chat is closing, set icon to message
+                    chatToggle.innerHTML = '<i data-lucide="message-square-text" class="w-8 h-8"></i>';
+                } else {
+                    // Chat is opening, set icon to close (X)
+                    chatToggle.innerHTML = '<i data-lucide="x" class="w-8 h-8"></i>';
+                }
+                // Re-initialize icons after changing innerHTML
+                lucide.createIcons();
+            }
+            
+            // If chat is opening, ensure it scrolls to the latest message
+            if (!chatWindow.classList.contains('hidden')) {
+                chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+            }
+        }
+
+        // Function to save the user's question to the "Cabinet" dashboard
+        function saveInquiryToCabinet(question) {
+            try {
+                const inquiryId = `inq-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                const newMessage = {
+                    id: inquiryId,
+                    question: question,
+                    timestamp: new Date().toISOString(),
+                    status: 'New',
+                    reply: null,
+                    page: 'CARION WIDE C-ARM'
+                };
+
+                // NOTE: Using localStorage as a simple substitute for a database (like Firestore) 
+                // for simulating the "Cabinet" feature in this single-file context.
+                const existingInquiriesJson = localStorage.getItem('astel_inquiries');
+                let inquiries = existingInquiriesJson ? JSON.parse(existingInquiriesJson) : [];
+                
+                // Add new message to the top
+                inquiries.unshift(newMessage); 
+                
+                localStorage.setItem('astel_inquiries', JSON.stringify(inquiries));
+            } catch (e) {
+                console.error("Error saving inquiry to local storage:", e);
+            }
+        }
+
+        function appendMessage(sender, text, isAIGrounded = false, sources = []) {
+            const isUser = sender === 'user';
+            const messageContainer = document.createElement('div');
+            messageContainer.className = isUser ? 'flex justify-end' : 'flex justify-start';
+            
+            const messageBubble = document.createElement('div');
+            messageBubble.className = `max-w-[80%] p-3 rounded-xl shadow-sm ${
+                isUser 
+                    ? 'bg-blue-600 text-white rounded-br-none' 
+                    : 'bg-white text-slate-800 rounded-tl-none border border-gray-100'
+            }`;
+            
+            // Add text content
+            const textNode = document.createElement('p');
+            textNode.textContent = text;
+            messageBubble.appendChild(textNode);
+
+            // Add sources if AI message and grounded
+            if (!isUser && isAIGrounded && sources.length > 0) {
+                const sourceDiv = document.createElement('div');
+                sourceDiv.className = 'mt-2 pt-2 border-t border-gray-200 text-xs text-gray-500 italic';
+                
+                // Safely extract source titles or hostnames
+                const sourceTitles = sources.map(s => {
+                    try {
+                        return s.title || (s.uri ? new URL(s.uri).hostname : 'Unknown Source');
+                    } catch {
+                        return s.title || 'Unknown Source';
+                    }
+                }).join(', ');
+
+                sourceDiv.textContent = `Source: ${sourceTitles}`;
+                
+                messageBubble.appendChild(sourceDiv);
+            }
+            
+            messageContainer.appendChild(messageBubble);
+            chatHistoryDiv.appendChild(messageContainer);
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight; // Auto-scroll to bottom
+        }
+
+        function showLoader() {
+            const loaderContainer = document.createElement('div');
+            loaderContainer.id = 'loader';
+            loaderContainer.className = 'flex justify-start';
+            loaderContainer.innerHTML = `
+                <div class="max-w-[80%] p-3 rounded-xl rounded-tl-none bg-white text-slate-800 border border-gray-100 shadow-sm">
+                    <span class="animate-pulse text-sm text-gray-500">Assistant is typing...</span>
+                </div>
+            `;
+            chatHistoryDiv.appendChild(loaderContainer);
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+        }
+
+        function removeLoader() {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.remove();
+            }
+        }
+
+        async function fetchGeminiResponse(userQuery) {
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const systemPrompt = "You are a friendly and helpful sales assistant for ASTEL's CARION WIDE C-ARM System. Answer questions concisely, professionally, and use the Google Search tool for up-to-date and factual information. If asked about features, specifically mention the Wide-View Dynamic Imaging, Optimized Dose Control, Advanced Mobility, and Powerful Generator details found on this product page. Do not mention that you are an AI model or a large language model. Keep responses brief.";
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }], // Enable Google Search Grounding
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            let response;
+            let attempts = 0;
+            const maxRetries = 3;
+            let delay = 1000; // 1 second
+
+            while (attempts < maxRetries) {
+                try {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (response.ok) {
+                        return await response.json();
+                    } else if (response.status === 429) {
+                        // Rate limit hit, try again after delay
+                        console.warn(`Rate limit hit (429). Retrying in ${delay / 1000}s...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2; // Exponential backoff
+                    } else {
+                        // Other HTTP error
+                        console.error('API Error:', response.status, response.statusText);
+                        break; 
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    break; 
+                }
+                attempts++;
+            }
+            if (attempts >= maxRetries) {
+                console.error('Failed to fetch Gemini response after multiple retries.');
+            }
+            return null; 
+        }
+
+        async function handleSendMessage() {
+            const userQuery = chatInput.value.trim();
+            if (userQuery === '') return;
+
+            // 1. Display user message and clear input
+            appendMessage('user', userQuery);
+            chatInput.value = '';
+            sendButton.disabled = true;
+            
+            // 2. Save inquiry to "Cabinet" (Simulates sending a lead/ticket)
+            saveInquiryToCabinet(userQuery);
+
+            // 3. Add to history 
+            chatHistory.push({ role: 'user', parts: [{ text: userQuery }] });
+
+            // 4. Show loader
+            showLoader();
+
+            // 5. Fetch response
+            const result = await fetchGeminiResponse(userQuery);
+
+            // 6. Remove loader and re-enable button
+            removeLoader();
+            sendButton.disabled = false;
+
+            if (result) {
+                const candidate = result.candidates?.[0];
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const aiText = candidate.content.parts[0].text;
+                    
+                    // Extract grounding sources
+                    let sources = [];
+                    let isGrounded = false;
+                    const groundingMetadata = candidate.groundingMetadata;
+                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                        isGrounded = true;
+                        sources = groundingMetadata.groundingAttributions
+                            .map(attribution => ({
+                                uri: attribution.web?.uri,
+                                title: attribution.web?.title,
+                            }))
+                            .filter(source => source.uri && source.title);
+                    }
+
+                    // 7. Display AI message
+                    appendMessage('assistant', aiText, isGrounded, sources);
+                    chatHistory.push({ role: 'model', parts: [{ text: aiText }] });
+
+                } else {
+                    console.error('Gemini API returned an unexpected or empty content structure:', result);
+                    appendMessage('assistant', 'Sorry, I couldn\'t generate a response. The API returned an unexpected structure. Please try again.');
+                }
+            } else {
+                appendMessage('assistant', 'It looks like there was an issue connecting to the assistant or the request failed. Please check your connection and try later.');
+            }
+        }
+
+        // Event Listeners
+        chatToggle.addEventListener('click', toggleChat);
+        sendButton.addEventListener('click', handleSendMessage);
+        chatInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                handleSendMessage();
+            }
+        });
+
+        // Initial setup and welcome message
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate the welcome message immediately so it's ready when the user opens the chat
+            appendMessage('assistant', 'Welcome! I am the ASTEL AI Assistant. Ask me anything about the CARION WIDE C-ARM System, its features, or related medical imaging technology. Your questions are also forwarded to our sales team.', false);
+            // Re-initialize icons (already done at the top, but safe to repeat if elements were dynamically added/modified)
+            lucide.createIcons();
+        });
+        // --- End AI Chat Logic ---
+    </script>
+</body>
+</html>
