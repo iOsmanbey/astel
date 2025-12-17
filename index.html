@@ -1,425 +1,744 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTEL - Crystal Clear Imaging Solutions</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        /* Custom styles for smooth scrolling and general look */
-        body {
-            font-family: 'Inter', sans-serif;
-            color: #1e293b; /* slate-800 */
-        }
-        .container {
-            max-width: 1200px;
-        }
-        /* Custom icon styling for Lucide integration */
-        .lucide {
-            display: inline-block;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASTEL - Crystal Clear Imaging Solutions (v2)</title>
+  <!-- Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Load Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Custom styles for smooth scrolling and general look */
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1e293b;
+      /* slate-800 */
+    }
+
+    .container {
+      max-width: 1200px;
+    }
+
+    /* Custom icon styling for Lucide integration */
+    .lucide {
+      display: inline-block;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Slider Styles */
+    .slider-viewport {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.7s ease-in-out;
+      width: 100%;
+    }
+
+    .slide {
+      min-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .slide img {
+      max-height: 800px;
+      width: auto;
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 71, 0, 0.04);
+    }
+
+    /* Magnifier Styles */
+    .magnifier-container {
+      position: relative;
+      cursor: zoom-in;
+    }
+
+    .magnifier-glass {
+      position: absolute;
+      border: 3px solid #3b82f6;
+      /* blue-500 */
+      border-radius: 50%;
+      cursor: none;
+      /* Update size: Bigger lens */
+      width: 250px;
+      height: 250px;
+      /* transform: translate(-50%, -50%);Centered on cursor */
+      pointer-events: none;
+      background-repeat: no-repeat;
+      display: none;
+      /* Hidden by default */
+      z-index: 50;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      background-color: #000;
+      /* Fallback */
+    }
+
+    /* Modal Styles */
+    .image-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      cursor: zoom-out;
+    }
+
+    .image-modal.show {
+      opacity: 1;
+    }
+
+    .image-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 4px;
+      box-shadow: 0 0 30px rgba(0, 100, 255, 0.2);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .image-modal.show img {
+      transform: scale(1);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      color: white;
+      font-size: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1001;
+      transition: text-shadow 0.3s;
+    }
+
+    .close-modal:hover {
+      color: #3b82f6;
+      text-shadow: 0 0 10px #3b82f6;
+    }
+  </style>
 </head>
+
 <body class="min-h-screen text-slate-800 bg-slate-50">
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center">
-                 <!-- Logo Section -->
-                 <div class="h-10 md:h-12 flex items-center">
-                    <img 
-                      src="./ASTEL-LOGO-2953X785.png.png" 
-                      alt="ASTEL" 
-                      class="h-full w-auto object-contain"
-                    />
-                 </div>
-            </div>
-
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8 items-center">
-                <a href="#home" class="text-slate-600 hover:text-blue-700 font-medium transition">Home</a>
-                <a href="#products" class="text-slate-600 hover:text-blue-700 font-medium transition">Products</a>
-                <a href="#events" class="text-slate-600 hover:text-blue-700 font-medium transition">Events</a>
-                           <a href="./carion.html" class="text-slate-600 font-medium mobile-menu-link">C-arm</a> 
-                <a href="#contact" class="text-slate-600 hover:text-blue-700 font-medium transition">Contact</a>
-                <a 
-                  href="#quote" 
-                  class="px-5 py-2.5 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                >
-                  Get a Quote
-                </a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button id="menu-button" class="md:hidden text-slate-700 focus:outline-none">
-                <i data-lucide="menu" id="menu-icon"></i>
-            </button>
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+      <div class="flex items-center">
+        <!-- Logo Section -->
+        <div class="h-10 md:h-12 flex items-center">
+          <img src="./ASTEL-LOGO-2953X785.png.png" alt="ASTEL" class="h-full w-auto object-contain" />
         </div>
+      </div>
 
-        <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 flex-col space-y-4 border-t border-slate-100">
-            <a href="#home" class="text-slate-600 font-medium mobile-menu-link">Home</a>
-            <a href="#products" class="text-slate-600 font-medium mobile-menu-link">Products</a>   
-            <a href="#events" class="text-slate-600 font-medium mobile-menu-link">Events</a>
-            <a href="#contact" class="text-slate-600 font-medium mobile-menu-link">Contact</a>
-            <a href="#quote" class="text-blue-700 font-bold mobile-menu-link">Get a Quote</a>
-        </div>
-    </nav>
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-8 items-center">
+        <a href="#home" class="text-slate-600 hover:text-blue-700 font-medium transition">Home</a>
+        <a href="#products" class="text-slate-600 hover:text-blue-700 font-medium transition">Products</a>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-        <div class="absolute inset-0 z-0 bg-gradient-to-br from-slate-100 to-blue-50 opacity-70"></div>
-        <!-- Abstract Shapes -->
-        <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-100/50 rounded-l-full transform translate-x-1/3 z-0"></div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-          <div class="flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2 space-y-6">
-              <div class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">
-                Advanced Digital Radiography
-              </div>
-              <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight">
-                Crystal Clear <span class="text-blue-700">Imaging</span> Solutions
-              </h1>
-              <p class="text-lg text-slate-600 leading-relaxed max-w-lg">
-                Innovating healthcare with state-of-the-art Flat Panel Detectors. Experience precision, speed, and reliability with ASTEL.
-              </p>
-              <div class="flex flex-wrap gap-4 pt-4">
-                <a href="#products" class="px-8 py-3 bg-blue-700 text-white font-bold rounded-lg hover:bg-blue-800 transition shadow-lg flex items-center gap-2">
-                  View Products <i data-lucide="arrow-right" class="lucide"></i>
-                </a>
-                <a href="#contact" class="px-8 py-3 bg-white text-slate-700 font-bold rounded-lg border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition">
-                  Contact Us
-                </a>
-              </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center">
-              <div class="relative w-full max-w-md flex justify-center">
-                <div class="absolute inset-0 bg-blue-200 rounded-full filter blur-3xl opacity-30 transform scale-110"></div>
-                <!-- Hero Image -->
-                <img 
-                  src="DR_ copy.png" 
-                  alt="ASTEL Flat Panel Detector" 
-                  class="relative z-10 h-auto w-3/4 md:w-full object-contain drop-shadow-2xl transform -rotate-6 hover:rotate-0 transition duration-700 ease-out"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
+        <a href="#events" class="text-slate-600 hover:text-blue-700 font-medium transition">Events</a>
+        <a href="./carion.html" class="text-slate-600 font-medium mobile-menu-link">C-arm</a>
+        <a href="#quote" class="text-slate-600 hover:text-blue-700 font-medium transition">Contact</a>
+        <a href="#quote"
+          class="px-5 py-2.5 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+          Get a Quote
+        </a>
+      </div>
 
-    <!-- Stats/Trust Bar -->
-    <div class="bg-blue-900 text-white py-12">
-        <div class="container mx-auto px-6">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div class="text-3xl font-bold mb-1">Global</div>
-              <div class="text-blue-200 text-sm">Distribution Network</div>
-            </div>
-            <div>
-              <div class="text-3xl font-bold mb-1">International</div>
-              <div class="text-blue-200 text-sm">Certified Quality</div>
-            </div>
-            <div>
-              <div class="text-3xl font-bold mb-1">Quality</div>
-              <div class="text-blue-200 text-sm">Technical Support</div>
-            </div>
-            <div>
-              <div class="text-3xl font-bold mb-1">Premium</div>
-              <div class="text-blue-200 text-sm">FPD Technology</div>
-            </div>
-          </div>
-        </div>
+      <!-- Mobile Menu Button -->
+      <button id="menu-button" class="md:hidden text-slate-700 focus:outline-none">
+        <i data-lucide="menu" id="menu-icon"></i>
+      </button>
     </div>
 
-    <!-- Products Section -->
-    <section id="products" class="py-24 bg-white">
-        <div class="container mx-auto px-6">
-          <div class="text-center mb-16">
-            <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Our Technology</h2>
-            <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Flat Panel Detectors</h3>
-            <div class="w-24 h-1 bg-blue-600 mx-auto mt-6 rounded-full"></div>
-          </div>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+      class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 flex-col space-y-4 border-t border-slate-100">
+      <a href="#home" class="text-slate-600 font-medium mobile-menu-link">Home</a>
+      <a href="#products" class="text-slate-600 font-medium mobile-menu-link">Products</a>
+      <a href="#events" class="text-slate-600 font-medium mobile-menu-link">Events</a>
+      <a href="#quote" class="text-slate-600 font-medium mobile-menu-link">Contact</a>
+      <a href="#quote" class="text-blue-700 font-bold mobile-menu-link">Get a Quote</a>
+    </div>
+  </nav>
 
-          <div id="product-list" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Product cards will be injected here by JavaScript -->
+  <!-- Hero Section -->
+  <section id="home" class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+    <div class="absolute inset-0 z-0 bg-gradient-to-br from-slate-100 to-blue-50 opacity-70"></div>
+    <!-- Abstract Shapes -->
+    <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-100/50 rounded-l-full transform translate-x-1/3 z-0">
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-1/2 space-y-6">
+          <div class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">
+            Advanced Digital Radiography
+          </div>
+          <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight">
+            Crystal Clear <span class="text-blue-700">Imaging</span> Solutions
+          </h1>
+          <p class="text-lg text-slate-600 leading-relaxed max-w-lg">
+            Innovating healthcare with state-of-the-art Flat Panel Detectors. Experience precision, speed,
+            and reliability with ASTEL.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-4">
+            <a href="#products"
+              class="px-8 py-3 bg-blue-700 text-white font-bold rounded-lg hover:bg-blue-800 transition shadow-lg flex items-center gap-2">
+              View Products <i data-lucide="arrow-right" class="lucide"></i>
+            </a>
+            <a href="#contact"
+              class="px-8 py-3 bg-white text-slate-700 font-bold rounded-lg border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition">
+              Contact Us
+            </a>
           </div>
         </div>
-    </section>
-
-    <!-- Upcoming Events -->
-    <section id="events" class="py-24 bg-slate-100">
-        <div class="container mx-auto px-6">
-          <div class="flex flex-col md:flex-row justify-between items-end mb-12">
-            <div>
-              <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Networking</h2>
-              <h3 id="events-title" class="text-3xl md:text-4xl font-bold text-slate-900">Upcoming Events</h3>
+        <div class="md:w-1/2 flex justify-center">
+          <div class="relative w-full max-w-md flex justify-center">
+            <div class="absolute inset-0 bg-blue-200 rounded-full filter blur-3xl opacity-30 transform scale-110">
             </div>
-            <!-- Toggle button for View All Events -->
-            <button 
-              id="event-toggle-button"
-              class="flex items-center text-blue-700 font-semibold hover:text-blue-900 mt-4 md:mt-0 transition"
-            >
-              View All Past Events <i data-lucide="chevron-right" class="lucide ml-1 w-5 h-5" id="event-toggle-icon"></i>
+            <!-- Hero Image with Magnifier -->
+            <div class="magnifier-container" id="magnifier-container">
+              <img src="DR_ copy.png" alt="ASTEL Flat Panel Detector" id="main-product-img"
+                class="relative z-10 h-auto w-3/4 md:w-full object-contain drop-shadow-2xl" />
+              <div class="magnifier-glass" id="magnifier-glass"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats/Trust Bar -->
+  <div class="bg-blue-900 text-white py-12">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-3xl font-bold mb-1">Global</div>
+          <div class="text-blue-200 text-sm">Distribution Network</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold mb-1">International</div>
+          <div class="text-blue-200 text-sm">Certified Quality</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold mb-1">Quality</div>
+          <div class="text-blue-200 text-sm">Technical Support</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold mb-1">Premium</div>
+          <div class="text-blue-200 text-sm">FPD Technology</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Products Section -->
+  <section id="products" class="py-24 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Our Technology</h2>
+        <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Flat Panel Detectors</h3>
+        <div class="w-24 h-1 bg-blue-600 mx-auto mt-6 rounded-full"></div>
+      </div>
+
+      <div id="product-list" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Product cards will be injected here by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Events -->
+  <section id="events" class="py-24 bg-slate-100">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+        <div>
+          <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Networking</h2>
+          <h3 id="events-title" class="text-3xl md:text-4xl font-bold text-slate-900">Upcoming Events</h3>
+        </div>
+        <!-- Toggle button for View All Events -->
+        <button id="event-toggle-button"
+          class="flex items-center text-blue-700 font-semibold hover:text-blue-900 mt-4 md:mt-0 transition">
+          View All Past Events <i data-lucide="chevron-right" class="lucide ml-1 w-5 h-5" id="event-toggle-icon"></i>
+        </button>
+      </div>
+
+      <div id="event-list" class="grid md:grid-cols-3 gap-8">
+        <!-- Event cards will be injected here by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote/Contact Section -->
+  <section id="quote" class="py-24 bg-white relative">
+    <div class="container mx-auto px-6">
+      <div class="bg-blue-900 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+        <!-- Form Side -->
+        <div class="md:w-3/5 p-8 md:p-12 lg:p-16 bg-white">
+          <h3 class="text-3xl font-bold text-slate-900 mb-2">Get a Quote / Book Meeting</h3>
+          <p class="text-slate-600 mb-8">Tell us about your requirements or preferred meeting time.</p>
+
+          <form id="quote-form" class="space-y-4">
+            <input type="hidden" id="contact-email" value="">
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1" for="firstName">First
+                  Name</label>
+                <input required type="text" id="firstName" name="firstName"
+                  class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  placeholder="John" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1" for="lastName">Last
+                  Name</label>
+                <input required type="text" id="lastName" name="lastName"
+                  class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  placeholder="Doe" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1" for="email">Work Email</label>
+              <input required type="email" id="email" name="email"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                placeholder="john@hospital.com" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1" for="company">Company /
+                Hospital</label>
+              <input type="text" id="company" name="company"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                placeholder="General Hospital" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1" for="product">Topic /
+                Product</label>
+              <select id="product" name="product"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white">
+                <option value="">Select a topic...</option>
+                <!-- Options will be added by JavaScript -->
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1" for="message">Message</label>
+              <textarea rows="4" id="message" name="message"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                placeholder="I would like to know the pricing for..."></textarea>
+            </div>
+
+            <button type="submit"
+              class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition shadow-md hover:shadow-lg flex justify-center items-center gap-2">
+              <i data-lucide="mail" class="lucide w-5 h-5"></i> Send Request
             </button>
-          </div>
-
-          <div id="event-list" class="grid md:grid-cols-3 gap-8">
-            <!-- Event cards will be injected here by JavaScript -->
-          </div>
+            <p class="text-xs text-center text-slate-400 mt-2">
+              This will open your default email client.
+            </p>
+          </form>
         </div>
-    </section>
 
-    <!-- Quote/Contact Section -->
-    <section id="quote" class="py-24 bg-white relative">
-        <div class="container mx-auto px-6">
-          <div class="bg-blue-900 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
-            <!-- Form Side -->
-            <div class="md:w-3/5 p-8 md:p-12 lg:p-16 bg-white">
-              <h3 class="text-3xl font-bold text-slate-900 mb-2">Get a Quote / Book Meeting</h3>
-              <p class="text-slate-600 mb-8">Tell us about your requirements or preferred meeting time.</p>
-              
-              <form id="quote-form" class="space-y-4">
-                <input type="hidden" id="contact-email" value="">
+        <!-- Info Side -->
+        <div
+          class="md:w-2/5 bg-blue-800 p-8 md:p-12 text-blue-50 flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-blue-700 rounded-full opacity-50">
+          </div>
+          <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-blue-900 rounded-full opacity-50">
+          </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1" for="firstName">First Name</label>
-                    <input 
-                      required 
-                      type="text" 
-                      id="firstName"
-                      name="firstName"
-                      class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
-                      placeholder="John" 
-                    />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1" for="lastName">Last Name</label>
-                    <input 
-                      required 
-                      type="text" 
-                      id="lastName"
-                      name="lastName"
-                      class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
-                      placeholder="Doe" 
-                    />
-                  </div>
+          <div class="relative z-10 space-y-8">
+            <h4 class="text-xl font-bold text-white">Contact Information</h4>
+
+            <div class="space-y-6">
+              <!-- Address -->
+              <div class="flex items-start">
+                <div class="bg-blue-700 p-2 rounded-lg mr-4 flex-shrink-0">
+                  <i data-lucide="map-pin" class="lucide w-5 h-5 text-white"></i>
                 </div>
-
                 <div>
-                  <label class="block text-sm font-medium text-slate-700 mb-1" for="email">Work Email</label>
-                  <input 
-                    required 
-                    type="email" 
-                    id="email"
-                    name="email"
-                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
-                    placeholder="john@hospital.com" 
-                  />
-                </div>
-
-                <div>
-                  <label class="block text-sm font-medium text-slate-700 mb-1" for="company">Company / Hospital</label>
-                  <input 
-                    type="text" 
-                    id="company"
-                    name="company"
-                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
-                    placeholder="General Hospital" 
-                  />
-                </div>
-
-                <div>
-                  <label class="block text-sm font-medium text-slate-700 mb-1" for="product">Topic / Product</label>
-                  <select 
-                    id="product"
-                    name="product"
-                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
-                  >
-                    <option value="">Select a topic...</option>
-                    <!-- Options will be added by JavaScript -->
-                  </select>
-                </div>
-
-                <div>
-                  <label class="block text-sm font-medium text-slate-700 mb-1" for="message">Message</label>
-                  <textarea 
-                    rows="4" 
-                    id="message"
-                    name="message"
-                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
-                    placeholder="I would like to know the pricing for..."
-                  ></textarea>
-                </div>
-
-                <button 
-                  type="submit" 
-                  class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition shadow-md hover:shadow-lg flex justify-center items-center gap-2"
-                >
-                  <i data-lucide="mail" class="lucide w-5 h-5"></i> Send Request
-                </button>
-                <p class="text-xs text-center text-slate-400 mt-2">
-                  This will open your default email client.
-                </p>
-              </form>
-            </div>
-
-            <!-- Info Side -->
-            <div class="md:w-2/5 bg-blue-800 p-8 md:p-12 text-blue-50 flex flex-col justify-between relative overflow-hidden">
-              <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-blue-700 rounded-full opacity-50"></div>
-              <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-blue-900 rounded-full opacity-50"></div>
-              
-              <div class="relative z-10 space-y-8">
-                <h4 class="text-xl font-bold text-white">Contact Information</h4>
-                
-                <div class="space-y-6">
-                  <!-- Address -->
-                  <div class="flex items-start">
-                    <div class="bg-blue-700 p-2 rounded-lg mr-4 flex-shrink-0">
-                       <i data-lucide="map-pin" class="lucide w-5 h-5 text-white"></i>
-                    </div>
-                    <div>
-                      <p class="text-blue-200 text-sm font-medium uppercase tracking-wide mb-1">Address</p>
-                      <p class="text-white leading-relaxed" id="contact-address"></p>
-                    </div>
-                  </div>
-
-                  <!-- Phone / Fax -->
-                  <div class="flex items-start">
-                    <div class="bg-blue-700 p-2 rounded-lg mr-4 flex-shrink-0">
-                       <i data-lucide="phone" class="lucide w-5 h-5 text-white"></i>
-                    </div>
-                    <div>
-                      <p class="text-blue-200 text-sm font-medium uppercase tracking-wide mb-1">Phone / Fax</p>
-                      <p class="text-white" id="contact-phone"></p>
-                      <p class="text-blue-200" id="contact-fax"></p>
-                    </div>
-                  </div>
-
-                  <!-- Direct Contact -->
-                  <div class="flex items-start">
-                    <div class="bg-blue-700 p-2 rounded-lg mr-4 flex-shrink-0">
-                       <i data-lucide="mail" class="lucide w-5 h-5 text-white"></i>
-                    </div>
-                    <div>
-                      <p class="text-blue-200 text-sm font-medium uppercase tracking-wide mb-1">Direct Contact</p>
-                      <p class="text-white font-bold" id="contact-name"></p>
-                      <a id="contact-email-link" class="text-blue-200 hover:text-white transition block"></a>
-                      <p class="text-white mt-2 flex items-center gap-2">
-                        <span class="bg-green-500 w-2 h-2 rounded-full"></span> 
-                        WhatsApp: <span id="contact-mobile"></span>
-                      </p>
-                    </div>
-                  </div>
+                  <p class="text-blue-200 text-sm font-medium uppercase tracking-wide mb-1">Address
+                  </p>
+                  <p class="text-white leading-relaxed" id="contact-address"></p>
                 </div>
               </div>
 
-              <div class="mt-12 relative z-10">
-                 <p class="text-sm text-blue-300">"Committed to excellence in medical imaging technology."</p>
+              <!-- Phone / Fax -->
+              <div class="flex items-start">
+                <div class="bg-blue-700 p-2 rounded-lg mr-4 flex-shrink-0">
+                  <i data-lucide="phone" class="lucide w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                  <p class="text-blue-200 text-sm font-medium uppercase tracking-wide mb-1">Phone /
+                    Fax</p>
+                  <p class="text-white" id="contact-phone"></p>
+                  <p class="text-blue-200" id="contact-fax"></p>
+                </div>
+              </div>
+
+              <!-- Direct Contact -->
+              <div class="flex items-start">
+                <div class="bg-blue-700 p-2 rounded-lg mr-4 flex-shrink-0">
+                  <i data-lucide="mail" class="lucide w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                  <p class="text-blue-200 text-sm font-medium uppercase tracking-wide mb-1">Direct
+                    Contact</p>
+                  <p class="text-white font-bold" id="contact-name"></p>
+                  <a id="contact-email-link" class="text-blue-200 hover:text-white transition block"></a>
+                  <p class="text-white mt-2 flex items-center gap-2">
+                    <span class="bg-green-500 w-2 h-2 rounded-full"></span>
+                    WhatsApp: <span id="contact-mobile"></span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer id="contact" class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-        <div class="container mx-auto px-6">
-          <div class="grid md:grid-cols-4 gap-8 mb-8">
-            <div class="col-span-1 md:col-span-2">
-              <div class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                 <!-- Footer Logo -->
-                 <img src="./ASTEL-LOGO-2953X785.png.png" alt="Astel Logo" class="h-8 w-auto brightness-0 invert" />
-              </div>
-              <p class="max-w-xs mb-6">Leading provider of digital radiography solutions, delivering high-quality imaging for better diagnostics worldwide.</p>
-            </div>
-            <div>
-              <h5 class="text-white font-bold mb-4">Products</h5>
-              <ul class="space-y-2 text-sm">
-                <li><a href="#" class="hover:text-blue-400 transition">Static Detectors</a></li>
-                <li><a href="#" class="hover:text-blue-400 transition">Mobile Detectors</a></li>
-                <li><a href="#" class="hover:text-blue-400 transition">Veterinary Solutions</a></li>
-                <li><a href="#" class="hover:text-blue-400 transition">Software</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 class="text-white font-bold mb-4">Legal</h5>
-              <ul class="space-y-2 text-sm">
-                <li><a href="#" class="hover:text-blue-400 transition">Privacy Policy</a></li>
-                <li><a href="#" class="hover:text-blue-400 transition">Terms of Service</a></li>
-                <li><a href="#" class="hover:text-blue-400 transition">Support</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
-            <p>&copy; 2024 Astel Co., Ltd. All rights reserved.</p>
-            <div class="flex space-x-4 mt-4 md:mt-0">
-               <!-- Social placeholders -->
-               <a href="#" class="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition text-white" aria-label="LinkedIn">In</a>
-               <a href="#" class="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition text-white" aria-label="Twitter">Tw</a>
-               <a href="#" class="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition text-white" aria-label="Facebook">Fb</a>
-            </div>
+          <div class="mt-12 relative z-10">
+            <p class="text-sm text-blue-300">"Committed to excellence in medical imaging technology."</p>
           </div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <!-- JavaScript -->
-    <script>
-        // Data Definitions (Copied from React component)
-        const allEvents = [
-            { id: 1, title: "KIMES 2026", date: "March 19-22, 2026", location: "COEX, Seoul, Korea", desc: "Join us at the 40th Korea International Medical & Hospital Equipment Show.", isPast: false },
-            { id: 2, title: "Arab Health 2026", date: "Feb 9-12, 2026", location: "Dubai World Trade Centre", desc: "Discover our latest digital radiography solutions at the Middle East's largest healthcare event.", isPast: false },
-            { id: 3, title: "World Health Expo 2026 (FIME)", date: "Dec 1-5, 2025", location: "Miami Beach Convention Center, USA", desc: "Experience the future of radiology with Astel's newest FPD technology.", isPast: false },
-            { id: 4, title: "Hospitalar 2024", date: "May 21-24, 2024", location: "São Paulo, Brazil", desc: "Showcasing our mobile FPDs in Latin America and connecting with distributors.", isPast: true },
-            { id: 5, title: "E-HEALTH 2024", date: "June 2-4, 2024", location: "Berlin, Germany", desc: "A focus on AI integration and software solutions in medical imaging.", isPast: true }
-        ];
+  <!-- Full Screen Image Modal -->
+  <div id="xray-modal" class="image-modal" onclick="closeModal()">
+    <span class="close-modal">&times;</span>
+    <img id="modal-img" src="" alt="Full X-Ray View">
+  </div>
 
-        const contactInfo = {
-            name: "Michael Ernazarov",
-            email: "michael1@astel.co.kr",
-            phone: "+82-42-360-2100",
-            fax: "+82-42-360-2113",
-            mobile: "+82-10-4692-1998",
-            address: "26-79, Gajeongbuk-ro, Yuseong-gu, Daejeon 34113, Korea"
-        };
+  <!-- Meet Our Team Section -->
+  <section id="team" class="py-24 bg-slate-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Our People</h2>
+        <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Meet Our Team</h3>
+        <div class="w-24 h-1 bg-blue-600 mx-auto mt-6 rounded-full"></div>
+      </div>
 
-        const products = [
-            { id: "DRA1417SC", name: "DRA1417S", type: "Static", desc: "High-resolution static flat panel detector optimized for general radiography.", features: ["Meeting ISO4090 cassette size", "Slim Design & Light Weightn", "Reliable AED function"] },
-            { id: "DRA1417MC", name: "DRA1417MC", type: "Mobile", desc: "Wireless mobile solution offering freedom of movement for varied clinical settings.", features: ["Lightweight", "Long Battery Life", "Wireless Connectivity"] },
-            { id: "RFA-1717MC", name: "RFA-1717MC", type: "Mobile", desc: "Large format wireless detector designed for versatility and high throughput.", features: ["17x17 inch FOV", "Auto-trigger", "Robust Design"] },
-            { id: "RFA-1717DIC", name: "RFA-1717DI", type: "Mobile", desc: "Premium static detector delivering exceptional image quality for demanding diagnostics.", features: ["Superior Frame Rate for Fluoroscopy, 30fps @ 1536×1536", "Static & Dynamic for General Radiography and Fluoroscopy", "Reliable AED function"] }
-        ];
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+        <!-- Team Member 1 -->
+        <div class="text-center group">
+          <div
+            class="relative w-40 h-40 mx-auto mb-4 rounded-full overflow-hidden shadow-lg border-4 border-white grayscale group-hover:grayscale-0 transition duration-500">
+            <img src="https://placehold.co/400x400/png?text=Member+1" alt="Team Member 1"
+              class="w-full h-full object-cover">
+          </div>
+          <h4 class="text-lg font-bold text-slate-800">Team Member 1</h4>
+          <p class="text-sm text-blue-600 font-medium">Position</p>
+        </div>
+        <!-- Team Member 2 -->
+        <div class="text-center group">
+          <div
+            class="relative w-40 h-40 mx-auto mb-4 rounded-full overflow-hidden shadow-lg border-4 border-white grayscale group-hover:grayscale-0 transition duration-500">
+            <img src="https://placehold.co/400x400/png?text=Member+2" alt="Team Member 2"
+              class="w-full h-full object-cover">
+          </div>
+          <h4 class="text-lg font-bold text-slate-800">Team Member 2</h4>
+          <p class="text-sm text-blue-600 font-medium">Position</p>
+        </div>
+        <!-- Team Member 3 -->
+        <div class="text-center group">
+          <div
+            class="relative w-40 h-40 mx-auto mb-4 rounded-full overflow-hidden shadow-lg border-4 border-white grayscale group-hover:grayscale-0 transition duration-500">
+            <img src="https://placehold.co/400x400/png?text=Member+3" alt="Team Member 3"
+              class="w-full h-full object-cover">
+          </div>
+          <h4 class="text-lg font-bold text-slate-800">Team Member 3</h4>
+          <p class="text-sm text-blue-600 font-medium">Position</p>
+        </div>
+        <!-- Team Member 4 -->
+        <div class="text-center group">
+          <div
+            class="relative w-40 h-40 mx-auto mb-4 rounded-full overflow-hidden shadow-lg border-4 border-white grayscale group-hover:grayscale-0 transition duration-500">
+            <img src="https://placehold.co/400x400/png?text=Member+4" alt="Team Member 4"
+              class="w-full h-full object-cover">
+          </div>
+          <h4 class="text-lg font-bold text-slate-800">Team Member 4</h4>
+          <p class="text-sm text-blue-600 font-medium">Position</p>
+        </div>
+        <!-- Team Member 5 -->
+        <div class="text-center group">
+          <div
+            class="relative w-40 h-40 mx-auto mb-4 rounded-full overflow-hidden shadow-lg border-4 border-white grayscale group-hover:grayscale-0 transition duration-500">
+            <img src="https://placehold.co/400x400/png?text=Member+5" alt="Team Member 5"
+              class="w-full h-full object-cover">
+          </div>
+          <h4 class="text-lg font-bold text-slate-800">Team Member 5</h4>
+          <p class="text-sm text-blue-600 font-medium">Position</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Global State for Form Interaction
-        let showAllEvents = false;
-        let activeModal = null; // Stores the product ID for pre-selection
-        let prefillMessage = ''; // Stores the message for event booking
+  <!-- Footer -->
+  <footer id="contact" class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div class="col-span-1 md:col-span-2">
+          <div class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+            <!-- Footer Logo -->
+            <img src="./ASTEL-LOGO-2953X785.png.png" alt="Astel Logo" class="h-8 w-auto brightness-0 invert" />
+          </div>
+          <p class="max-w-xs mb-6">Leading provider of digital radiography solutions, delivering high-quality
+            imaging for better diagnostics worldwide.</p>
+        </div>
+        <div>
+          <h5 class="text-white font-bold mb-4">Products</h5>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-blue-400 transition">Static Detectors</a></li>
+            <li><a href="#" class="hover:text-blue-400 transition">Mobile Detectors</a></li>
+            <li><a href="#" class="hover:text-blue-400 transition">Veterinary Solutions</a></li>
+            <li><a href="#" class="hover:text-blue-400 transition">Software</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-white font-bold mb-4">Legal</h5>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-blue-400 transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-blue-400 transition">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-blue-400 transition">Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
+        <p>&copy; 2024 Astel Co., Ltd. All rights reserved.</p>
+        <div class="flex space-x-4 mt-4 md:mt-0">
+          <!-- Social placeholders -->
+          <a href="#"
+            class="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition text-white"
+            aria-label="LinkedIn">In</a>
+          <a href="#"
+            class="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition text-white"
+            aria-label="Twitter">Tw</a>
+          <a href="#"
+            class="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition text-white"
+            aria-label="Facebook">Fb</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-        // --- Core Functions ---
+  <!-- JavaScript -->
+  <script>
+    // Data Definitions
+    const allEvents = [
+      { id: 1, title: "KIMES 2026", date: "March 19-22, 2026", location: "COEX, Seoul, Korea", desc: "Join us at the 40th Korea International Medical & Hospital Equipment Show.", isPast: false },
+      { id: 2, title: "Arab Health 2026", date: "Feb 9-12, 2026", location: "Dubai World Trade Centre", desc: "Discover our latest digital radiography solutions at the Middle East's largest healthcare event.", isPast: false },
+      { id: 3, title: "World Health Expo 2026 (FIME)", date: "Dec 1-5, 2025", location: "Miami Beach Convention Center, USA", desc: "Experience the future of radiology with Astel's newest FPD technology.", isPast: false },
+      { id: 4, title: "Hospitalar 2024", date: "May 21-24, 2024", location: "São Paulo, Brazil", desc: "Showcasing our mobile FPDs in Latin America and connecting with distributors.", isPast: true },
+      { id: 5, title: "E-HEALTH 2024", date: "June 2-4, 2024", location: "Berlin, Germany", desc: "A focus on AI integration and software solutions in medical imaging.", isPast: true }
+    ];
 
-        /**
-         * Renders the product cards into the DOM.
-         */
-        function renderProducts() {
-            const productList = document.getElementById('product-list');
-            if (!productList) return;
+    const contactInfo = {
+      name: "Michael Ernazarov",
+      email: "michael1@astel.co.kr",
+      phone: "+82-42-360-2100",
+      fax: "+82-42-360-2113",
+      mobile: "+82-10-4692-1998",
+      address: "26-79, Gajeongbuk-ro, Yuseong-gu, Daejeon 34113, Korea"
+    };
 
-            productList.innerHTML = products.map(product => {
-                const featureList = product.features.map(feature => `
+    const products = [
+      { id: "DRA1417SC", name: "DRA1417S", type: "Static", desc: "High-resolution static flat panel detector optimized for general radiography.", features: ["Meeting ISO4090 cassette size", "Slim Design & Light Weightn", "Reliable AED function"] },
+      { id: "DRA1417MC", name: "DRA1417MC", type: "Mobile", desc: "Wireless mobile solution offering freedom of movement for varied clinical settings.", features: ["Lightweight", "Long Battery Life", "Wireless Connectivity"] },
+      { id: "RFA-1717MC", name: "RFA-1717MC", type: "Mobile", desc: "Large format wireless detector designed for versatility and high throughput.", features: ["17x17 inch FOV", "Auto-trigger", "Robust Design"] },
+      { id: "RFA-1717DIC", name: "RFA-1717DI", type: "Mobile", desc: "Premium static detector delivering exceptional image quality for demanding diagnostics.", features: ["Superior Frame Rate for Fluoroscopy, 30fps @ 1536×1536", "Static & Dynamic for General Radiography and Fluoroscopy", "Reliable AED function"] }
+    ];
+
+    // Global State
+    let showAllEvents = false;
+    let activeModal = null;
+    let prefillMessage = '';
+
+    // --- Magnifier Logic ---
+    function initMagnifier() {
+      const container = document.getElementById('magnifier-container');
+      const img = document.getElementById('main-product-img');
+      const glass = document.getElementById('magnifier-glass');
+
+      if (!container || !img || !glass) return;
+
+      // Configuration
+      const zoomLevel = 2.5; // How much to zoom the background image
+      // We use xray1.png (High Res) as the 'revealed' image
+      const xrayImageSrc = './xray1.png';
+
+      glass.style.backgroundImage = `url('${xrayImageSrc}')`;
+      glass.style.backgroundSize = `${img.width * zoomLevel}px ${img.height * zoomLevel}px`;
+
+      // Mouse Move Handler
+      function moveMagnifier(e) {
+        e.preventDefault();
+
+        // Prevent magnifier execution if image is not loaded or has 0 dimensions
+        if (img.width === 0 || img.height === 0) return;
+
+        // Ensure background size matches current image size (responsive)
+        glass.style.backgroundSize = `${img.width * zoomLevel}px ${img.height * zoomLevel}px`;
+
+        const pos = getCursorPos(e);
+        let x = pos.x;
+        let y = pos.y;
+
+        // Center the glass on the cursor
+        // We actually want the glass position to be (cursorX - glassWidth/2, cursorY - glassHeight/2)
+        // The 'pos' returned is relative to the image
+        // But the glass is absolute inside the container (which wraps the image)
+
+        // Prevent lens from going outside the image
+        /*
+        if (x > img.width - (glass.offsetWidth / 2)) { x = img.width - (glass.offsetWidth / 2); }
+        if (x < glass.offsetWidth / 2) { x = glass.offsetWidth / 2; }
+        if (y > img.height - (glass.offsetHeight / 2)) { y = img.height - (glass.offsetHeight / 2); }
+        if (y < glass.offsetHeight / 2) { y = glass.offsetHeight / 2; }
+        */
+
+        // Calculate Glass Position (Top/Left)
+        const glassLeft = x - (glass.offsetWidth / 2);
+        const glassTop = y - (glass.offsetHeight / 2);
+
+        glass.style.left = glassLeft + "px";
+        glass.style.top = glassTop + "px";
+
+        // Calculate Background Position
+        // We want to show the part of the background image that corresponds to the cursor position * zoom
+        // backgroundPosition = -(x * zoom - glassW/2 + offset)
+
+        const bgX = (x * zoomLevel) - (glass.offsetWidth / 2);
+        const bgY = (y * zoomLevel) - (glass.offsetHeight / 2);
+
+        glass.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+      }
+
+      function getCursorPos(e) {
+        const rect = img.getBoundingClientRect();
+        let x = e.pageX - rect.left - window.pageXOffset;
+        let y = e.pageY - rect.top - window.pageYOffset;
+        // Consider any scrolling
+        // window.pageXOffset is deprecated, using window.scrollX is better but let's stick to safe
+        return { x: x, y: y };
+      }
+
+      // Events
+      container.addEventListener("mousemove", moveMagnifier);
+      container.addEventListener("mouseenter", () => {
+        glass.style.display = "block";
+      });
+      container.addEventListener("mouseleave", () => {
+        glass.style.display = "none";
+      });
+
+      // Touch support
+      container.addEventListener("touchmove", moveMagnifier);
+
+      // Click to open modal
+      container.addEventListener("click", () => {
+        openImageModal(xrayImageSrc);
+      });
+    }
+
+    // --- Modal Logic ---
+    const xrayImages = ['./xray1.png', './xray2.png', './xray3.png', './xray4.png', './xray5.png'];
+    // Preload
+    xrayImages.forEach(src => new Image().src = src);
+
+    function openImageModal(initialSrc) {
+      const modal = document.getElementById('xray-modal');
+      const modalImg = document.getElementById('modal-img');
+      if (modal && modalImg) {
+        // Default to initialSrc, but if logic requires, start with the first one or specific logic
+        // Here we just make sure the initial one is displayed
+        if (initialSrc) modalImg.src = initialSrc;
+
+        modal.style.display = 'flex';
+        void modal.offsetWidth;
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+
+        // Attach mouse move for switching images
+        modal.addEventListener('mousemove', handleModalMouseMove);
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('xray-modal');
+      if (modal) {
+        modal.classList.remove('show');
+        // Remove listener
+        modal.removeEventListener('mousemove', handleModalMouseMove);
+
+        setTimeout(() => {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 300);
+      }
+    }
+
+    function handleModalMouseMove(e) {
+      const width = window.innerWidth;
+      const x = e.clientX;
+      const modalImg = document.getElementById('modal-img');
+
+      // Divide screen into 5 sections for 5 images
+      const sectionWidth = width / 5;
+      let targetSrc = '';
+
+      if (x < sectionWidth) {
+        targetSrc = xrayImages[0];
+      } else if (x < sectionWidth * 2) {
+        targetSrc = xrayImages[1];
+      } else if (x < sectionWidth * 3) {
+        targetSrc = xrayImages[2];
+      } else if (x < sectionWidth * 4) {
+        targetSrc = xrayImages[3];
+      } else {
+        targetSrc = xrayImages[4];
+      }
+
+      // Only update if different (check end of string to handle absolute paths vs relative)
+      if (!modalImg.src.endsWith(targetSrc.substring(2))) { // remove './' for comparison
+        modalImg.src = targetSrc;
+      }
+    }
+
+
+    // --- Core Functions ---
+
+    function renderProducts() {
+      const productList = document.getElementById('product-list');
+      if (!productList) return;
+
+      productList.innerHTML = products.map(product => {
+        const featureList = product.features.map(feature => `
                     <li class="flex items-center text-xs text-slate-500">
                         <i data-lucide="check-circle" class="lucide w-4 h-4 text-green-500 mr-2"></i> ${feature}
                     </li>
                 `).join('');
 
-                return `
+        return `
                     <div class="group bg-slate-50 rounded-xl overflow-hidden hover:shadow-2xl transition duration-300 border border-slate-100 flex flex-col">
                         <div class="h-64 p-8 flex items-center justify-center bg-white relative overflow-hidden">
                             <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg z-10">
@@ -449,54 +768,46 @@
                         </div>
                     </div>
                 `;
-            }).join('');
-            
-            // Re-render Lucide icons after injecting HTML
-            lucide.createIcons();
-            attachProductListeners();
-        }
+      }).join('');
 
-        /**
-         * Attaches click listeners to product buttons.
-         */
-        function attachProductListeners() {
-            document.querySelectorAll('.request-pricing-btn').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    activeModal = this.getAttribute('data-product-id');
-                    prefillMessage = ''; // Clear message for product inquiries
-                    updateQuoteForm();
-                });
-            });
-        }
+      attachProductListeners();
+    }
 
-        /**
-         * Renders the event cards into the DOM based on the showAllEvents state.
-         */
-        function renderEvents() {
-            const eventList = document.getElementById('event-list');
-            const eventsTitle = document.getElementById('events-title');
-            const toggleButton = document.getElementById('event-toggle-button');
+    function attachProductListeners() {
+      document.querySelectorAll('.request-pricing-btn').forEach(button => {
+        button.addEventListener('click', function (e) {
+          activeModal = this.getAttribute('data-product-id');
+          prefillMessage = '';
+          updateQuoteForm();
+        });
+      });
+    }
 
-            if (!eventList || !eventsTitle || !toggleButton) return;
+    function renderEvents() {
+      const eventList = document.getElementById('event-list');
+      const eventsTitle = document.getElementById('events-title');
+      const toggleButton = document.getElementById('event-toggle-button');
 
-            const visibleEvents = showAllEvents 
-                ? allEvents 
-                : allEvents.filter(e => !e.isPast);
+      if (!eventList || !eventsTitle || !toggleButton) return;
 
-            eventsTitle.textContent = showAllEvents ? 'All Company Events' : 'Upcoming Events';
-            toggleButton.innerHTML = showAllEvents 
-                ? `View Only Upcoming <i data-lucide="chevron-right" class="lucide ml-1 w-5 h-5 rotate-180"></i>`
-                : `View All Past Events <i data-lucide="chevron-right" class="lucide ml-1 w-5 h-5"></i>`;
+      const visibleEvents = showAllEvents
+        ? allEvents
+        : allEvents.filter(e => !e.isPast);
 
-            eventList.innerHTML = visibleEvents.map(event => {
-                const pastClass = event.isPast ? 'border-slate-400 opacity-75' : 'border-blue-600';
-                const textColor = event.isPast ? 'text-slate-500' : 'text-blue-600';
-                const buttonClasses = event.isPast 
-                    ? 'border border-slate-300 text-slate-500 bg-slate-100 cursor-pointer hover:bg-slate-200' 
-                    : 'border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white';
-                const buttonText = event.isPast ? 'Inquire for Details' : 'Book Meeting';
+      eventsTitle.textContent = showAllEvents ? 'All Company Events' : 'Upcoming Events';
+      toggleButton.innerHTML = showAllEvents
+        ? `View Only Upcoming <i data-lucide="chevron-right" class="lucide ml-1 w-5 h-5 rotate-180"></i>`
+        : `View All Past Events <i data-lucide="chevron-right" class="lucide ml-1 w-5 h-5"></i>`;
 
-                return `
+      eventList.innerHTML = visibleEvents.map(event => {
+        const pastClass = event.isPast ? 'border-slate-400 opacity-75' : 'border-blue-600';
+        const textColor = event.isPast ? 'text-slate-500' : 'text-blue-600';
+        const buttonClasses = event.isPast
+          ? 'border border-slate-300 text-slate-500 bg-slate-100 cursor-pointer hover:bg-slate-200'
+          : 'border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white';
+        const buttonText = event.isPast ? 'Inquire for Details' : 'Book Meeting';
+
+        return `
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition border-l-4 flex flex-col ${pastClass}">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center font-semibold ${textColor}">
@@ -518,185 +829,171 @@
                         </button>
                     </div>
                 `;
-            }).join('');
+      }).join('');
 
-            // Re-render Lucide icons and attach listeners
-            lucide.createIcons();
-            attachEventListeners();
+      attachEventListeners();
+    }
+
+    function attachEventListeners() {
+      document.querySelectorAll('.book-meeting-btn').forEach(button => {
+        button.addEventListener('click', function () {
+          const eventId = parseInt(this.getAttribute('data-event-id'));
+          const event = allEvents.find(e => e.id === eventId);
+          if (event) {
+            handleBookMeeting(event);
+          }
+        });
+      });
+    }
+
+    function toggleEvents() {
+      showAllEvents = !showAllEvents;
+      renderEvents();
+      lucide.createIcons();
+    }
+
+    function handleBookMeeting(event) {
+      try {
+        if (event.isPast) {
+          prefillMessage = `I am inquiring about the ${event.title} event held on ${event.date} and would like to receive follow-up information or materials from that show.`;
+        } else {
+          activeModal = 'Other';
+          prefillMessage = `I would like to request a meeting during ${event.title}.\nLocation: ${event.location}\nDate: ${event.date}\n\nPlease let me know your available slots.`;
         }
 
-        /**
-         * Attaches click listeners to event buttons.
-         */
-        function attachEventListeners() {
-            document.querySelectorAll('.book-meeting-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const eventId = parseInt(this.getAttribute('data-event-id'));
-                    const event = allEvents.find(e => e.id === eventId);
-                    if (event) {
-                        handleBookMeeting(event);
-                    }
-                });
-            });
+        updateQuoteForm();
+
+        const quoteSection = document.getElementById('quote');
+        if (quoteSection) {
+          quoteSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      } catch (error) {
+        console.error("Error during handleBookMeeting:", error);
+      }
+    }
+
+    function updateQuoteForm() {
+      const productSelect = document.getElementById('product');
+      const messageTextarea = document.getElementById('message');
+
+      if (productSelect && activeModal) {
+        // Check if the option exists
+        let optionExists = false;
+        for (let i = 0; i < productSelect.options.length; i++) {
+          if (productSelect.options[i].value === activeModal) {
+            optionExists = true;
+            break;
+          }
         }
 
-        /**
-         * Toggles the visibility of past events and re-renders the event list.
-         */
-        function toggleEvents() {
-            showAllEvents = !showAllEvents;
-            renderEvents();
+        if (!optionExists) {
+          // Create a temporary option for this specific external referral
+          const newOption = document.createElement('option');
+          newOption.value = activeModal;
+          newOption.textContent = activeModal;
+          productSelect.appendChild(newOption);
         }
+        productSelect.value = activeModal;
+      }
 
-        /**
-         * Handles the Book Meeting button click logic (scroll and message pre-fill).
-         * @param {object} event The event data object.
-         */
-        function handleBookMeeting(event) {
-            try {
-                if (event.isPast) {
-                    prefillMessage = `I am inquiring about the ${event.title} event held on ${event.date} and would like to receive follow-up information or materials from that show.`;
-                } else {
-                    activeModal = 'Other'; // Set product dropdown to 'Other'
-                    prefillMessage = `I would like to request a meeting during ${event.title}.\nLocation: ${event.location}\nDate: ${event.date}\n\nPlease let me know your available slots.`;
-                }
-                
-                updateQuoteForm();
+      if (messageTextarea && prefillMessage) {
+        messageTextarea.value = prefillMessage;
+      }
+    }
 
-                // Smooth scroll to the quote section
-                const quoteSection = document.getElementById('quote');
-                if (quoteSection) {
-                    quoteSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            } catch (error) {
-                console.error("Error during handleBookMeeting:", error);
-                const quoteSection = document.getElementById('quote');
-                if (quoteSection) {
-                    quoteSection.scrollIntoView();
-                }
-            }
+    window.onload = function () {
+      renderProducts();
+      renderEvents();
+
+      // Magnifier Init
+      initMagnifier();
+
+      document.getElementById('contact-address').textContent = contactInfo.address;
+      document.getElementById('contact-phone').textContent = `T: ${contactInfo.phone}`;
+      document.getElementById('contact-fax').textContent = `F: ${contactInfo.fax}`;
+      document.getElementById('contact-name').textContent = contactInfo.name;
+      document.getElementById('contact-mobile').textContent = contactInfo.mobile;
+
+      const emailLink = document.getElementById('contact-email-link');
+      emailLink.href = `mailto:${contactInfo.email}`;
+      emailLink.textContent = contactInfo.email;
+      document.getElementById('contact-email').value = contactInfo.email;
+
+      const productSelect = document.getElementById('product');
+      products.forEach(p => {
+        const option = document.createElement('option');
+        option.value = p.name;
+        option.textContent = `${p.name} (${p.type})`;
+        productSelect.appendChild(option);
+      });
+      const genericOption = document.createElement('option');
+      genericOption.value = 'Other';
+      genericOption.textContent = 'Other / General Inquiry / Meeting';
+      productSelect.appendChild(genericOption);
+
+      // Check for URL parameters (e.g. from C-arm page)
+      const urlParams = new URLSearchParams(window.location.search);
+      const productParam = urlParams.get('product');
+      if (productParam) {
+        const cleanProduct = productParam.replace(/_/g, ' ');
+        activeModal = cleanProduct;
+        prefillMessage = `I am interested in the ${cleanProduct} system.`;
+        updateQuoteForm();
+      }
+
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 20) {
+          navbar.classList.remove('bg-transparent', 'py-4');
+          navbar.classList.add('bg-white', 'shadow-md', 'py-2');
+        } else {
+          navbar.classList.remove('bg-white', 'shadow-md', 'py-2');
+          navbar.classList.add('bg-transparent', 'py-4');
         }
+      });
 
-        /**
-         * Updates the quote form elements based on global state (activeModal, prefillMessage).
-         */
-        function updateQuoteForm() {
-            const productSelect = document.getElementById('product');
-            const messageTextarea = document.getElementById('message');
+      const menuButton = document.getElementById('menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      let isMenuOpen = false;
 
-            if (productSelect && activeModal) {
-                // Ensure the 'Other' option is available if pre-filling for an event
-                if (activeModal === 'Other' && !productSelect.querySelector('option[value="Other"]')) {
-                    const otherOption = document.createElement('option');
-                    otherOption.value = 'Other';
-                    otherOption.textContent = 'Other / General Inquiry / Meeting';
-                    productSelect.appendChild(otherOption);
-                }
-                productSelect.value = activeModal;
-            }
+      menuButton.addEventListener('click', function () {
+        isMenuOpen = !isMenuOpen;
+        mobileMenu.classList.toggle('hidden', !isMenuOpen);
+        mobileMenu.classList.toggle('flex', isMenuOpen);
 
-            if (messageTextarea && prefillMessage) {
-                messageTextarea.value = prefillMessage;
-            }
-        }
+        menuIcon.outerHTML = `<i data-lucide="${isMenuOpen ? 'x' : 'menu'}" id="menu-icon"></i>`;
+        lucide.createIcons();
+      });
 
+      document.querySelectorAll('.mobile-menu-link').forEach(link => {
+        link.addEventListener('click', function () {
+          isMenuOpen = false;
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('flex');
+          menuIcon.outerHTML = `<i data-lucide="menu" id="menu-icon"></i>`;
+          lucide.createIcons();
+        });
+      });
 
-        // --- Event Handlers & Initialization ---
+      document.getElementById('event-toggle-button').addEventListener('click', toggleEvents);
 
-        window.onload = function() {
-            // 1. Initial Content Rendering
-            renderProducts();
-            renderEvents();
-            
-            // 2. Populate Static Contact Info
-            document.getElementById('contact-address').textContent = contactInfo.address;
-            document.getElementById('contact-phone').textContent = `T: ${contactInfo.phone}`;
-            document.getElementById('contact-fax').textContent = `F: ${contactInfo.fax}`;
-            document.getElementById('contact-name').textContent = contactInfo.name;
-            document.getElementById('contact-mobile').textContent = contactInfo.mobile;
-            
-            const emailLink = document.getElementById('contact-email-link');
-            emailLink.href = `mailto:${contactInfo.email}`;
-            emailLink.textContent = contactInfo.email;
-            document.getElementById('contact-email').value = contactInfo.email; // Hidden field for form use
+      document.getElementById('quote-form').addEventListener('submit', function (e) {
+        e.preventDefault();
 
-            // 3. Populate Product Options in Form
-            const productSelect = document.getElementById('product');
-            products.forEach(p => {
-                const option = document.createElement('option');
-                option.value = p.name;
-                option.textContent = `${p.name} (${p.type})`;
-                productSelect.appendChild(option);
-            });
-            // Add the generic option last
-            const genericOption = document.createElement('option');
-            genericOption.value = 'Other';
-            genericOption.textContent = 'Other / General Inquiry / Meeting';
-            productSelect.appendChild(genericOption);
+        const form = e.target;
+        const formData = {
+          firstName: form.firstName.value,
+          lastName: form.lastName.value,
+          email: form.email.value,
+          company: form.company.value,
+          product: form.product.value,
+          message: form.message.value
+        };
+        const contactEmail = document.getElementById('contact-email').value;
 
-
-            // 4. Attach General Event Listeners
-            
-            // Navbar scroll effect
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 20) {
-                    navbar.classList.remove('bg-transparent', 'py-4');
-                    navbar.classList.add('bg-white', 'shadow-md', 'py-2');
-                } else {
-                    navbar.classList.remove('bg-white', 'shadow-md', 'py-2');
-                    navbar.classList.add('bg-transparent', 'py-4');
-                }
-            });
-
-            // Mobile menu toggle
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuIcon = document.getElementById('menu-icon');
-            let isMenuOpen = false;
-
-            menuButton.addEventListener('click', function() {
-                isMenuOpen = !isMenuOpen;
-                mobileMenu.classList.toggle('hidden', !isMenuOpen);
-                mobileMenu.classList.toggle('flex', isMenuOpen);
-                
-                // Update icon
-                menuIcon.outerHTML = `<i data-lucide="${isMenuOpen ? 'x' : 'menu'}" id="menu-icon"></i>`;
-                lucide.createIcons();
-            });
-
-            // Close mobile menu when a link is clicked
-            document.querySelectorAll('.mobile-menu-link').forEach(link => {
-                link.addEventListener('click', function() {
-                    isMenuOpen = false;
-                    mobileMenu.classList.add('hidden');
-                    mobileMenu.classList.remove('flex');
-                    menuIcon.outerHTML = `<i data-lucide="menu" id="menu-icon"></i>`;
-                    lucide.createIcons();
-                });
-            });
-
-            // Event toggle button
-            document.getElementById('event-toggle-button').addEventListener('click', toggleEvents);
-
-            // Form submission handler
-            document.getElementById('quote-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const form = e.target;
-                const formData = {
-                    firstName: form.firstName.value,
-                    lastName: form.lastName.value,
-                    email: form.email.value,
-                    company: form.company.value,
-                    product: form.product.value,
-                    message: form.message.value
-                };
-                const contactEmail = document.getElementById('contact-email').value;
-
-                // Construct Mailto Link
-                const subject = `Inquiry: ${formData.product || 'General'}`;
-                const body = `
+        const subject = `Inquiry: ${formData.product || 'General'}`;
+        const body = `
 Name: ${formData.firstName} ${formData.lastName}
 Email: ${formData.email}
 Company: ${formData.company}
@@ -709,18 +1006,14 @@ ${formData.message}
 Sent via ASTEL Website Quote Form
                 `;
 
-                // Encode components
-                const mailtoLink = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body.trim())}`;
-                
-                // Open email client
-                window.location.href = mailtoLink;
-                
-                console.log("Attempting to open email client to send the request.");
-            });
-            
-            // 5. Final icon creation (for static elements)
-            lucide.createIcons();
-        };
-    </script>
+        const mailtoLink = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body.trim())}`;
+        window.location.href = mailtoLink;
+        console.log("Attempting to open email client to send the request.");
+      });
+
+      lucide.createIcons();
+    };
+  </script>
 </body>
+
 </html>

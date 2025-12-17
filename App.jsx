@@ -575,7 +575,7 @@ Sent via ASTEL Website Quote Form
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">Company / Hospital</label>
+        <label className="block text-sm font-medium text-slate-700 mb-1">Your Company / Hospital</label>
         <input 
           type="text" 
           name="company"
